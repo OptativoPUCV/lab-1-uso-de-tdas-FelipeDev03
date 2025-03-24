@@ -101,23 +101,20 @@ Puedes usar una pila auxiliar.
 void copia_pila(Stack* P1, Stack* P2) {
    Stack* pilaAux = create_stack();
 
-   // Paso 1: Vaciar P1 en pilaAux (invirtiendo el orden)
    while (top(P1) != NULL) {
       push(pilaAux, top(P1));
       pop(P1);
    }
 
-   // Paso 2: Restaurar P1 y copiar elementos a P2
    while (top(pilaAux) != NULL) {
       int* datoOriginal = (int*)top(pilaAux);
       pop(pilaAux);
 
-      // Crear una copia del dato antes de insertarlo en P2
       int* copiaDato = (int*)malloc(sizeof(int));
       *copiaDato = *datoOriginal;
 
-      push(P1, datoOriginal); // Restaurar en P1
-      push(P2, copiaDato);    // Insertar copia en P2
+      push(P1, datoOriginal);
+      push(P2, copiaDato);
    }
 
    free(pilaAux);
