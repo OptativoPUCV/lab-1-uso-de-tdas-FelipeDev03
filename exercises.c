@@ -86,7 +86,7 @@ posiciona en el elemento anterior.
 void eliminaElementos(List*L, int elem){
    int* numActual = (int*) first(L);
    while (numActual != NULL) {
-      if (numActual == elem) popCurrent(L);  
+      if (*numActual == elem) popCurrent(L);  
       numActual = (int*) next(L);
    }
 }
@@ -100,16 +100,26 @@ Puedes usar una pila auxiliar.
 
 void copia_pila(Stack* P1, Stack* P2) {
    Stack* pilaAux = create_stack();
-   while (top(P1) != NULL){
+
+   // Paso 1: Vaciar P1 en pilaAux (invirtiendo el orden)
+   while (top(P1) != NULL) {
       push(pilaAux, top(P1));
       pop(P1);
    }
 
-   while (top(pilaAux) != NULL){
-      push(P1, top(pilaAux));
-      push(P2, top(pilaAux));
+   // Paso 2: Restaurar P1 y copiar elementos a P2
+   while (top(pilaAux) != NULL) {
+      int* datoOriginal = (int*)top(pilaAux);
       pop(pilaAux);
+
+      // Crear una copia del dato antes de insertarlo en P2
+      int* copiaDato = (int*)malloc(sizeof(int));
+      *copiaDato = *datoOriginal;
+
+      push(P1, datoOriginal); // Restaurar en P1
+      push(P2, copiaDato);    // Insertar copia en P2
    }
+
    free(pilaAux);
 }
 
