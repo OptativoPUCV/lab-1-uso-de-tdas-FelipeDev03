@@ -64,17 +64,13 @@ retorne la suma de sus elementos.
 */
 int sumaLista(List *L) {
    int suma = 0;
-   int* numActual;
-   
-   // Comienza desde el primer elemento de la lista
-   numActual = (int*) first(L); // Obtén el primer puntero (int*)
-   
-   // Recorre la lista mientras haya elementos
+   int* numActual = (int*) first(L);
+
    while (numActual != NULL) {
-      suma += *numActual; // Desreferencia el puntero para obtener el valor del entero
-      numActual = (int*) next(L); // Avanza al siguiente elemento de la lista
+      suma += *numActual;
+      numActual = (int*) next(L);
    }
-   
+
    return suma;
 }
 
@@ -88,7 +84,11 @@ posiciona en el elemento anterior.
 */
 
 void eliminaElementos(List*L, int elem){
-
+   int* numActual = (int*) first(L);
+   while (numActual != NULL) {
+      if (numActual == elem) popCurrent(L);  
+      numActual = (int*) next(L);
+   }
 }
 
 /*
@@ -99,6 +99,18 @@ Puedes usar una pila auxiliar.
 */
 
 void copia_pila(Stack* P1, Stack* P2) {
+   Stack* pilaAux = create_stack();
+   while (top(P1) != NULL){
+      push(pilaAux, top(P1));
+      pop(P1);
+   }
+
+   while (top(pilaAux) != NULL){
+      push(P1, top(pilaAux));
+      push(P2, top(pilaAux));
+      pop(pilaAux);
+   }
+   free(pilaAux);
 }
 
 /*
